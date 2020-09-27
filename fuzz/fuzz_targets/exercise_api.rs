@@ -134,25 +134,22 @@ impl Arbitrary for Actions {
                         Ok(Action::TxAssertShouldHave(tx, *key))
                     });
 
-                    if false {
-                        choices.push(|input, scope| {
-                            let tx = *input.choose(&non_empty_txs(scope).collect::<Vec<_>>())?;
-                            let keys = scope.txs[&tx].keys().collect::<Vec<_>>();
-                            let key = **input.choose(&keys)?;
-                            let _ = scope.txs.get_mut(&tx).unwrap().remove(&key);
-                            Ok(Action::TxRemove(tx, key, true))
-                        });
-                    }
-                }
-
-                if false {
-                    // random remove
                     choices.push(|input, scope| {
-                        let tx = *input.choose(&scope.active_txs)?;
-                        let key = Key::arbitrary(input)?;
-                        Ok(Action::TxRemove(tx, key, false))
+                        let tx = *input.choose(&non_empty_txs(scope).collect::<Vec<_>>())?;
+                        let keys = scope.txs[&tx].keys().collect::<Vec<_>>();
+                        let key = **input.choose(&keys)?;
+                        let _ = scope.txs.get_mut(&tx).unwrap().remove(&key);
+                        Ok(Action::TxRemove(tx, key, true))
                     });
                 }
+
+                // random remove
+                choices.push(|input, scope| {
+                    let tx = *input.choose(&scope.active_txs)?;
+                    let key = Key::arbitrary(input)?;
+                    let _ = scope.txs.get_mut(&tx).unwrap().remove(&key);
+                    Ok(Action::TxRemove(tx, key, false))
+                });
 
                 choices.push(|input, scope| {
                     let tx = *input.choose(&scope.active_txs)?;

@@ -284,7 +284,6 @@ fn bogus_proofs() -> Result<(), AnyErr> {
 }
 
 #[test]
-#[ignore]
 fn fuzz_1() -> Result<(), AnyErr> {
     let tmp_db = TmpDatabase::new()?;
     let tx = tmp_db.db.new_tx()?;
