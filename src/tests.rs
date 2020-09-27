@@ -282,3 +282,25 @@ fn bogus_proofs() -> Result<(), AnyErr> {
 
     Ok(())
 }
+
+#[test]
+#[ignore]
+fn fuzz_1() -> Result<(), AnyErr> {
+    let tmp_db = TmpDatabase::new()?;
+    let tx = tmp_db.db.new_tx()?;
+    tx.insert(
+        &hex!("0000000000000000000000000000000000000000000000000000000000000001"),
+        &[],
+    )?;
+    tx.commit()?;
+    tx.commit()?;
+
+    assert_matches!(
+        tx.remove(&hex!(
+            "0000000000000000000000000000000000000000000000000000000000000000"
+        )),
+        Err(crate::Error::NotFound)
+    );
+
+    Ok(())
+}
