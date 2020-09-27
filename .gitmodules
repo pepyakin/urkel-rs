@@ -1,0 +1,3 @@
+[submodule "urkel-sys/liburkel"]
+	path = urkel-sys/liburkel
+	url = git@github.com:chjj/liburkel.git
