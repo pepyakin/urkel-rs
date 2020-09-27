@@ -195,12 +195,46 @@ impl<'a> Transaction<'a> {
         Ok(proof)
     }
 
+    pub fn revert(&self, root: [u8; 32]) -> Result<(), Error> {
+        let ret = unsafe { sys::urkel_tx_inject(self.tx, root.as_ptr()) };
+        if ret == 0 {
+            return Err(Errno::fetch().into_error());
+        }
+        Ok(())
+    }
+
     pub fn commit(&self) -> Result<(), Error> {
         let ret = unsafe { sys::urkel_tx_commit(self.tx) };
         if ret == 0 {
             return Err(Errno::fetch().into_error());
         }
         Ok(())
+    }
+
+    pub fn get(&self, key: &[u8]) -> Result<Option<Vec<u8>>, Error> {
+        let mut value = Vec::with_capacity(MAX_VALUE_SIZE);
+        let mut size = 0;
+        let ret = unsafe {
+            sys::urkel_tx_get(
+                self.tx,
+                value.as_mut_ptr(),
+                &mut size as *mut usize,
+                key.as_ptr(),
+            )
+        };
+        if ret == 1 {
+            unsafe {
+                value.set_len(size);
+            }
+            Ok(Some(value))
+        } else {
+            let errno = Errno::fetch();
+            if errno.is_not_found() {
+                Ok(None)
+            } else {
+                return Err(errno.into_error());
+            }
+        }
     }
 
     pub fn iter(&self) -> Result<Iter, Error> {
