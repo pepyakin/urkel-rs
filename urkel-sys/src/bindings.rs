@@ -195,3 +195,6 @@ extern "C" {
         size: *mut size_t,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn urkel_free(ptr: *mut ::std::os::raw::c_void);
+}
