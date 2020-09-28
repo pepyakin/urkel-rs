@@ -1,7 +1,7 @@
 mod db;
 mod error;
-mod util;
 mod proof;
+mod util;
 
 pub use db::{Database, Iter, Key, Transaction, MAX_VALUE_SIZE};
 pub use error::Error;

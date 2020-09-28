@@ -85,7 +85,7 @@ impl VerifyError {
             err => {
                 debug_assert!(false, "{} is not known", err);
                 VerifyError::Unknown
-            },
+            }
         }
     }
 }
