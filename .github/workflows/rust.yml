@@ -18,6 +18,24 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: test
+          args: --all
+
+  fuzz_check:
+    name: Fuzz suite compiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --manifest-path=fuzz/Cargo.toml
 
   fmt:
     name: Rustfmt
