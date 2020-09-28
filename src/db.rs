@@ -76,7 +76,7 @@ impl Database {
 
         let proof = unsafe {
             let proof = Proof::from_ptr(proof_raw, proof_len);
-            libc::free(proof_raw as *mut _);
+            sys::urkel_free(proof_raw as *mut _);
             proof
         };
         Ok(proof)
@@ -189,7 +189,7 @@ impl<'a> Transaction<'a> {
 
         let proof = unsafe {
             let proof = Proof::from_ptr(proof_raw, proof_len);
-            libc::free(proof_raw as *mut _);
+            sys::urkel_free(proof_raw as *mut _);
             proof
         };
         Ok(proof)

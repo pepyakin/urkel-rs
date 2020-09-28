@@ -220,7 +220,6 @@ dependencies = [
  "blake2-rfc",
  "cfg-if",
  "hex-literal",
- "libc",
  "tempfile",
  "thiserror",
  "urkel-sys",

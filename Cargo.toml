@@ -10,7 +10,6 @@ edition = "2018"
 urkel-sys = { path = "urkel-sys", version = "*" }
 cfg-if = "0.1.10"
 thiserror = "1.0.20"
-libc = "0.2.77"
 
 [dev-dependencies]
 tempfile = "3.1.0"
