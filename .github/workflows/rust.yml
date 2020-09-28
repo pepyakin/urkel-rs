@@ -18,7 +18,7 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --all --frozen
+          args: --all
 
   fuzz_check:
     name: Fuzz suite compiles
@@ -35,7 +35,7 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --manifest-path=fuzz/Cargo.toml --frozen
+          args: --manifest-path=fuzz/Cargo.toml
 
   fmt:
     name: Rustfmt
