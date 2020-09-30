@@ -37,8 +37,26 @@ jobs:
           command: build
           args: --manifest-path=fuzz/Cargo.toml
 
-    fuzz_crash_1:
-      name: Fuzz Crash 1
+  fuzz_crash_1:
+    name: Fuzz Crash 1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly
+          override: true
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: cargo-fuzz
+          version: latest
+      - run: cargo fuzz run exercise_api ./crash-43328125cc99f1c07b81c76d548d1a74b5266f09
+
+    fuzz_crash_2:
+      name: Fuzz Crash 2
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
@@ -53,25 +71,7 @@ jobs:
           with:
             crate: cargo-fuzz
             version: latest
-        - run: cargo fuzz run exercise_api ./crash-43328125cc99f1c07b81c76d548d1a74b5266f09
-
-      fuzz_crash_2:
-        name: Fuzz Crash 2
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-            with:
-              submodules: recursive
-          - uses: actions-rs/toolchain@v1
-            with:
-              profile: minimal
-              toolchain: nightly
-              override: true
-          - uses: actions-rs/install@v0.1
-            with:
-              crate: cargo-fuzz
-              version: latest
-          - run: cargo fuzz run exercise_api ./crash-35ca385e9c00f4ba042bba7b90ca0f6f0f8428f9
+        - run: cargo fuzz run exercise_api ./crash-35ca385e9c00f4ba042bba7b90ca0f6f0f8428f9
 
   fmt:
     name: Rustfmt
