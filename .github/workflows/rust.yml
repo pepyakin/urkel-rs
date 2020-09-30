@@ -50,9 +50,9 @@ jobs:
             toolchain: nightly
             override: true
         - uses: actions-rs/install@v0.1
-            with:
-              crate: cargo-fuzz
-              version: latest
+          with:
+            crate: cargo-fuzz
+            version: latest
         - run: cargo fuzz run exercise_api ./crash-43328125cc99f1c07b81c76d548d1a74b5266f09
 
       fuzz_crash_2:
@@ -68,9 +68,9 @@ jobs:
               toolchain: nightly
               override: true
           - uses: actions-rs/install@v0.1
-              with:
-                crate: cargo-fuzz
-                version: latest
+            with:
+              crate: cargo-fuzz
+              version: latest
           - run: cargo fuzz run exercise_api ./crash-35ca385e9c00f4ba042bba7b90ca0f6f0f8428f9
 
   fmt:
